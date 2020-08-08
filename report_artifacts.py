@@ -14,21 +14,44 @@ logger = logging.getLogger(__name__)
 
 #--------------------------------------------------------------------------------#
 def create_report_artifacts(reportData):
-    logger.debug("Entering create_report_artifacts")
+    logger.info("Entering create_report_artifacts")
 
     # Dict to hold the complete list of reports
     reports = {}
 
-    htmlFile = generate_html_report(reportData)
     textFile = generate_text_report(reportData)
-
+    htmlFile = generate_html_report(reportData)
+    
     reports["viewable"] = htmlFile
     reports["allFormats"] = [htmlFile, textFile]
 
-    logger.debug("Exiting create_custom_report")
+    logger.info("Exiting create_custom_report")
     
     return reports 
 
+#------------------------------------------------------------------#
+def generate_text_report(reportData):
+    logger.info("    Entering generate_text_report")
+    
+    reportName = reportData["reportName"]
+    projectName = reportData["projectName"]
+    projectOwner = reportData["ownerName"]
+    
+    textFile = reportName + "-" + projectName + ".txt"
+
+    # Create a simple HTML file to display
+    txt_ptr = open(textFile,"w")
+    txt_ptr.write("%s\n" %reportName) 
+    txt_ptr.write("\n")
+    txt_ptr.write("Details for project: %s\n" %projectName) 
+    txt_ptr.write("Project Owner: %s\n" %projectOwner) 
+    txt_ptr.write("\n")
+
+    txt_ptr.close() 
+
+    logger.info("    Exiting generate_text_report")
+    
+    return textFile
 
 #------------------------------------------------------------------#
 def generate_html_report(reportData):
@@ -57,28 +80,3 @@ def generate_html_report(reportData):
     logger.info("    Exiting generate_html_report")
     return htmlFile
 
-#------------------------------------------------------------------#
-def generate_text_report(reportData):
-    logger.info("    Entering generate_text_report")
-    
-    reportName = reportData["reportName"]
-    projectName = reportData["projectName"]
-    projectOwner = reportData["ownerName"]
-    
-    textFile = reportName + "-" + projectName + ".txt"
-
-    # Create a simple HTML file to display
-    txt_ptr = open(textFile,"w")
-    txt_ptr.write("%s\n" %reportName) 
-    txt_ptr.write("\n")
-    txt_ptr.write("Details for project: %s\n" %projectName) 
-    txt_ptr.write("Project Owner: %s\n" %projectOwner) 
-    txt_ptr.write("\n")
-
-    txt_ptr.close() 
-
-    
-    
-    logger.info("    Exiting generate_text_report")
-    
-    return textFile

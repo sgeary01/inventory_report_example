@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 #-------------------------------------------------------------------#
 def gather_data_for_report(domainName, port, projectID, authToken, reportName):
-    logger.debug("Entering gather_data_for_report")
+    logger.info("Entering gather_data_for_report")
 
     try:
         projectInventoryResponse = CodeInsight_RESTAPIs.project.get_project_inventory.get_project_inventory_details(domainName, port, projectID, authToken)
@@ -36,7 +36,7 @@ def gather_data_for_report(domainName, port, projectID, authToken, reportName):
     
 
 
-    logger.debug("Exiting gather_data_for_report")
+    logger.info("Exiting gather_data_for_report")
 
     return reportData
 
