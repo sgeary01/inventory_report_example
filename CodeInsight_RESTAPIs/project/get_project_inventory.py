@@ -21,7 +21,7 @@ def get_project_inventory_details(domainName, port, projectID, authToken):
     RESTAPI_BASEURL = "http://" + domainName + ":" + port + "/codeinsight/api/"
     ENDPOINT_URL = RESTAPI_BASEURL + "project/inventory/"
     
-    RESTAPI_URL = ENDPOINT_URL + str(projectID) + "?published=true&size=100&page=1" 
+    RESTAPI_URL = ENDPOINT_URL + str(projectID) + "?published=true" 
     logger.debug("    RESTAPI_URL: %s" %RESTAPI_URL)
     
     headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authToken} 

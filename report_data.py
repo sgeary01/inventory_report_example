@@ -33,6 +33,7 @@ def gather_data_for_report(domainName, port, projectID, authToken, reportName):
     reportData["projectName"] = projectName
     reportData["ownerName"] = projectOwner
     reportData["projectID"] = projectID
+    reportData["inventoryItems"] = inventoryItems
     
 
 

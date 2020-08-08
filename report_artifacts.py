@@ -36,7 +36,8 @@ def generate_text_report(reportData):
     reportName = reportData["reportName"]
     projectName = reportData["projectName"]
     projectOwner = reportData["ownerName"]
-    
+    inventoryItems = reportData["inventoryItems"]
+
     textFile = reportName + "-" + projectName + ".txt"
 
     # Create a simple HTML file to display
@@ -46,6 +47,7 @@ def generate_text_report(reportData):
     txt_ptr.write("Details for project: %s\n" %projectName) 
     txt_ptr.write("Project Owner: %s\n" %projectOwner) 
     txt_ptr.write("\n")
+    txt_ptr.write("Number of Inventory Items: %s\n" %len(inventoryItems)) 
 
     txt_ptr.close() 
 
@@ -59,6 +61,9 @@ def generate_html_report(reportData):
 
     reportName = reportData["reportName"]
     projectName = reportData["projectName"]
+    projectOwner = reportData["ownerName"]
+    inventoryItems = reportData["inventoryItems"]
+    
 
     htmlFile = reportName + "-" + projectName + ".html"
 
@@ -69,9 +74,10 @@ def generate_html_report(reportData):
     html_ptr.write("<h1><center>%s</center></h1>\n" %reportName) 
     html_ptr.write("<p>\n") 
     html_ptr.write("<hr>\n") 
-    html_ptr.write("<h1> Details for project: " + reportData["projectName"] + "</h1>\n") 
+    html_ptr.write("<h1> Details for project: %s</h1>\n" %projectName) 
     html_ptr.write("<p>\n") 
-    html_ptr.write("<h3> Project Owner: " + reportData["ownerName"] + "</h3>\n") 
+    html_ptr.write("<h3> Project Owner: %s</h3>\n" %projectOwner) 
+    html_ptr.write("<h4> Number of Inventory Items: %s</h4>\n" %len(inventoryItems) )
     html_ptr.write("<p>\n") 
     html_ptr.write("<hr>\n") 
     html_ptr.write("</html>\n") 
