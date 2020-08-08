@@ -99,7 +99,7 @@ def create_report_zipfile(reportOutputs, tempFileBaseName):
 
 	# create a ZipFile object
 	allFormatZipFile = tempFileBaseName + ".zip"
-	allFormatsZip = zipfile.ZipFile(allFormatZipFile, 'w')
+	allFormatsZip = zipfile.ZipFile(allFormatZipFile, 'w', zipfile.ZIP_DEFLATED)
 
 	print("        Create downloadable archive")
 	for format in reportOutputs["allFormats"]:
@@ -115,7 +115,7 @@ def create_report_zipfile(reportOutputs, tempFileBaseName):
 	print("        Create zip archive containing viewable and downloadable archive for upload")
 	logger.debug("    Create zip archive containing viewable and downloadable archive for upload")
 	uploadZipflle = tempFileBaseName + "_upload.zip"
-	zipToUpload = zipfile.ZipFile(uploadZipflle, 'w')
+	zipToUpload = zipfile.ZipFile(uploadZipflle, 'w', zipfile.ZIP_DEFLATED)
 	zipToUpload.write(reportOutputs["viewable"])
 	zipToUpload.write(allFormatZipFile)
 	zipToUpload.close()
