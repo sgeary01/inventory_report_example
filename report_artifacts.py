@@ -25,7 +25,7 @@ def create_report_artifacts(reportData):
     reports["viewable"] = htmlFile
     reports["allFormats"] = [htmlFile, textFile]
 
-    logger.info("Exiting create_custom_report")
+    logger.info("Exiting create_report_artifacts")
     
     return reports 
 

@@ -12,6 +12,7 @@ import sys
 import logging
 import argparse
 import zipfile
+import os
 
 import report_data
 import report_artifacts
@@ -78,11 +79,68 @@ def main():
 		logger.error("Error encountered while creating report artifacts.")
 		return -1
 
-	logger.debug("Reports: %s" %reports)
+
+	# Create zip file to be uploaded to Code Insight
+	try:
+		uploadZipfile = create_report_zipfile(reports, reportName)
+		print("    Upload zip file creation completed")
+	except:
+		print("Error created zip archive for upload. Please see log for details")
+		logger.error("Error created zip archive for upload.")
+		return -1
+
+	logger.info("Completed creating %s" %reportName)
+	print("Completed creating %s" %reportName)
 
 
-	logger.info("Completed %s" %reportName)
-	print("Completed %s" %reportName)
+#---------------------------------------------------------------------#
+def create_report_zipfile(reportOutputs, tempFileBaseName):
+	logger.info("Entering create_report_zipfile")
+
+	# create a ZipFile object
+	allFormatZipFile = tempFileBaseName + ".zip"
+	allFormatsZip = zipfile.ZipFile(allFormatZipFile, 'w')
+
+	print("        Create downloadable archive")
+	for format in reportOutputs["allFormats"]:
+		print("            Adding %s to zip" %format)
+		logger.debug("    Adding %s to zip" %format)
+		allFormatsZip.write(format)
+
+	allFormatsZip.close()
+	logger.debug(    "Downloadable archive created")
+	print("        Downloadable archive created")
+
+	# Now create a zipfile of the zipfile along with the viewable file itself
+	print("        Create zip archive containing viewable and downloadable archive for upload")
+	logger.debug("    Create zip archive containing viewable and downloadable archive for upload")
+	uploadZipflle = tempFileBaseName + "_upload.zip"
+	zipToUpload = zipfile.ZipFile(uploadZipflle, 'w')
+	zipToUpload.write(reportOutputs["viewable"])
+	zipToUpload.write(allFormatZipFile)
+	zipToUpload.close()
+	logger.debug("    Archive zip file for upload has been created")
+	print("        Archive zip file for upload has been created")
+
+	# Clean up the items that were added to the zipfile
+	try:
+		os.remove(allFormatZipFile)
+	except OSError:
+		logger.error("Error removing %s" %allFormatZipFile)
+		print("Error removing %s" %allFormatZipFile)
+		return -1
+
+	for fileName in reportOutputs["allFormats"]:
+		try:
+			os.remove(fileName)
+		except OSError:
+			logger.error("Error removing %s" %fileName)
+			print("Error removing %s" %fileName)
+			return -1    
+
+	logger.info("Exiting create_report_zipfile")
+	return uploadZipflle
+
 
 
 #----------------------------------------------------------------------#    
