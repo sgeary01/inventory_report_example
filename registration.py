@@ -71,6 +71,9 @@ def main():
         parser.print_help(sys.stderr)
     elif args.register:
         register_custom_reports()
+        if sys.platform.startswith('linux'):
+            # Make the shell script executable
+            os.chmod(reportPath, os.stat(reportPath).st_mode | stat.S_IEXEC)
     elif args.unregister:
         unregister_custom_reports()
     else:
