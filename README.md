@@ -56,11 +56,11 @@ Prior to being able to call the script directly from within Code Insight it must
 
 To register this report:
 
-    python -reg
+    python registration.py -reg
 
 To unregister this report:
 
-    python -unreg
+    python registration.py -unreg
 
   
   
