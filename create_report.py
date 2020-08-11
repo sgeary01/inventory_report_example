@@ -44,7 +44,7 @@ parser.add_argument("-port", "--port", help="Code Insight Core Server Port")
 #----------------------------------------------------------------------#
 def main():
 
-	reportName = "Template Example Report"
+	reportName = "Inventory Report"
 
 	logger.info("Creating %s" %reportName)
 	print("Creating %s" %reportName)
@@ -79,6 +79,8 @@ def main():
 		print("Error encountered while creating report artifacts.  Please see log for details")
 		logger.error("Error encountered while creating report artifacts.")
 		return -1
+
+	sys.exit()
 
 	#########################################################
 	# Create zip file to be uploaded to Code Insight
